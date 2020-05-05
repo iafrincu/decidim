@@ -28,7 +28,7 @@ module Decidim
         validates :address, geocoding: true, if: -> { current_component.settings.geocoding_enabled? }
         validates :category, presence: true, if: ->(form) { form.category_id.present? }
         validates :scope, presence: true, if: ->(form) { form.scope_id.present? }
-        validates :decidim_scope_id, subscope_belongs_to_component: true, if: ->(form) { form.decidim_scope_id.present? }
+        validates :scope_id, scope_belongs_to_component: true, if: ->(form) { form.scope_id.present? }
         validates :meeting_as_author, presence: true, if: ->(form) { form.created_in_meeting? }
 
         validate :notify_missing_attachment_if_errored
@@ -53,7 +53,7 @@ module Decidim
           @category ||= categories.find_by(id: category_id)
         end
 
-        # Finds the Scope from the given decidim_scope_id, uses participatory space scope if missing.
+        # Finds the Scope from the given scope_id, uses participatory space scope if missing.
         #
         # Returns a Decidim::Scope
         def scope

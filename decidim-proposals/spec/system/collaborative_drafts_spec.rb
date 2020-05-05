@@ -101,10 +101,15 @@ describe "Explore Collaborative Drafts", versioning: true, type: :system do
         let!(:component) do
           create(:proposal_component,
                  :with_creation_enabled,
-                 :with_geocoding_and_collaborative_drafts_enabled,
                  manifest: manifest,
                  participatory_space: participatory_process,
-                 organization: organization)
+                 organization: organization,
+                 settings: {
+                   collaborative_drafts_enabled: true,
+                   geocoding_enabled: true,
+                   scopes_enabled: true,
+                   scope_id: participatory_process.scope&.id
+                 })
         end
         let!(:collaborative_draft) { create(:collaborative_draft, :open, component: component, address: address, category: category, scope: scope, users: [author]) }
         let(:address) { "Carrer Pare Llaurador 113, baixos, 08224 Terrassa" }
